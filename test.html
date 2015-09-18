@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app="customerDb">
+  <head>
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+  </head>
+  <body ng-controller="CustomerCtrl as customer">
+    <section ng-controller="PanelCtrl as panel">
+      <div>
+        <ul class="nav nav-pills">
+          <li ng-click="{ panel.isSelected(1) }"><a href ng-click="panel.selectTab(1)">Customer List</a></li>
+          <li ng-click="{ panel.isSelected(2) }"><a href ng-click="panel.selectTab(2)">Add Customer</a></li>
+          <li ng-click="{ panel.isSelected(3) }"><a href ng-click="panel.selectTab(3)">Edit Customer</a></li>
+          <li ng-click="{ panel.isSelected(4) }"><a href ng-click="panel.selectTab(4)">Delete Customer</a></li>
+        </ul>
+      </div>
+      <div class="panel" ng-show="panel.isSelected(1)">
+        <h1>Customer List</h1>
+        <ol>
+          <li ng-repeat="person in customer.people">
+            <p>{{person.name}}</p>
+            <p>{{person.email}}</p>
+            <p>{{person.telephone}}</p>
+            <p>{{person.address}} {{person.street}}</p>
+            <p>{{person.city}}, {{person.state}} {{person.zip}}</p>
+          </li>
+        </ol>
+      </div>
+      <div class="panel" ng-show="panel.isSelected(2)">
+        <h1>Add a customer</h1>
+        <form name="newCustomerForm" ng-controller="FormController as formCtrl" ng-submit="newCustomerForm.$valid && formCtrl.addCustomer(customer)" novalidate>
+          <p><input ng-model="person.name" type="text" placeholder="Name" required></p>
+          <p><input ng-model="person.email" type="email" placeholder="e-mail" required></p>
+          <p><input ng-model="person.telephone" type="number" max="9999999999" placeholder="Telephone" required></p>
+          <p><input ng-model="person.address" type="number" placeholder="Address" required></p>
+          <p><input ng-model="person.street" type="text" placeholder="Street" required></p>
+          <p><input ng-model="person.city" type="text" placeholder="City" required></p>
+          <p><input ng-model="person.state" type="text" max="2" placeholder="State" required></p>
+          <p><input ng-model="person.zip" type="number" max="99999" placeholder="Zip" required></p>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="panel" ng-show="panel.isSelected(3)">
+        <h1>Edit a customer</h1>
+        <form name="editCustomerForm" ng-controller="FormController as formCtrl" ng-submit="editCustomerForm.$valid && formCtrl.editCustomer(customer)" novalidate>
+          <p><input type="text" placeholder="Name" required></p>
+          <p><input type="email" placeholder="e-mail" required></p>
+          <p><input type="number" max="9999999999" placeholder="Telephone" required></p>
+          <p><input type="number" placeholder="Address" required></p>
+          <p><input type="text" placeholder="Street" required></p>
+          <p><input type="text" placeholder="City" required></p>
+          <p><input type="text" max="2" placeholder="State" required></p>
+          <p><input type="number" max="99999" placeholder="Zip" required></p>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="panel" ng-show="panel.isSelected(4)">
+        <h1>Delete a customer</h1>
+        <form>
+          Search customers:
+          <input type="search" name="">
+          <button type="submit">Search</button>
+        </form>
+        <div>
+          <p>{{person.name}}</p>
+          <p>{{person.email}}</p>
+          <p>{{person.telephone}}</p>
+          <p>{{person.address}} {{person.street}}</p>
+          <p>{{person.city}}, {{person.state}} {{person.zip}}</p>
+        </div>
+        <form action="deleteCustomer">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </section>
+
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+  </body>
+</html>
